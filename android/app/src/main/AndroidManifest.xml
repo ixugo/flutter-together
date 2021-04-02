@@ -1,5 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_together">
+     <!-- 访问网络连接，可能产生GPRS流量 -->
+        <uses-permission android:name="android.permission.INTERNET" />
+        <!-- 允许程序写入外部存储，如SD卡上写文件 -->
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+         <!-- 媒体读权限 -->
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+       <!-- 获取网络信息状态，如当前的网络连接是否有效 -->
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <!-- 获取当前WiFi接入的状态以及WLAN热点的信息 -->
+        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
    <application
         android:label="together"
         android:icon="@mipmap/ic_launcher">
