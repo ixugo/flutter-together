@@ -10,6 +10,7 @@ import 'package:flutter_together/app/search_tab.dart';
 import 'package:flutter_together/common/lazy_load_stack.dart';
 import 'package:flutter_together/providers/app_state_model.dart';
 import 'package:flutter_together/providers/theme.dart';
+import 'package:flutter_together/theme.dart';
 import 'package:flutter_together/widgets/will_pop_scope.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +49,9 @@ class TogetherApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       title: taskTitle,
-      theme: tm.getTheme,
+      theme: TogetherTheme.light,
+      darkTheme: TogetherTheme.dart,
+      themeMode: tm.getTheme,
       navigatorKey: navigatorKey,
       builder: BotToastInit(),
       navigatorObservers: <NavigatorObserver>[
@@ -59,40 +62,33 @@ class TogetherApp extends StatelessWidget {
   }
 }
 
-final List<Map> pages = [
-  {
-    "widget": ProductListTab(),
-    "icon": Icons.attachment,
-  },
-  {
-    "widget": SearchTab(),
-    "icon": CupertinoIcons.chat_bubble_2,
-  },
-];
-
 class CupertinoHomePage extends StatelessWidget {
+  final List<Map> pages = [
+    {
+      "widget": ProductListTab(),
+      "icon": Icons.attachment,
+    },
+    {
+      "widget": SearchTab(),
+      "icon": CupertinoIcons.chat_bubble_2,
+    },
+  ];
   @override
   Widget build(BuildContext ctx) {
     return Consumer<AppStateModel>(builder: _buildWithModel);
   }
 
   Widget _buildWithModel(ctx, AppStateModel am, _) {
+    var a = Theme.of(ctx).accentColor;
     return WillPop(
       child: Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           onTap: (int i) => am.setCurIndex(i),
           color: Theme.of(ctx).bottomAppBarColor,
-          backgroundColor: Theme.of(ctx).scaffoldBackgroundColor,
+          backgroundColor: Colors.transparent,
           animationDuration: Duration(milliseconds: 370),
           height: Platform.isIOS ? 65 : 60,
-          items: pages
-              .map(
-                (e) => Icon(
-                  e["icon"] as IconData,
-                  color: Theme.of(ctx).accentColor,
-                ),
-              )
-              .toList(),
+          items: pages.map((e) => Icon(e["icon"], size: 30)).toList(),
         ),
         body: LazyIndexedStack(
           currentIndex: am.curIndex,

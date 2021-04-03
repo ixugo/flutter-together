@@ -30,6 +30,9 @@ abstract class TogetherTheme {
     ), // appbar
     bottomAppBarColor: bgDark, // 底部 appbar 颜色
     hintColor: Colors.white,
+    buttonColor: Colors.white54,
+    cardColor: Colors.grey[500],
+    iconTheme: IconThemeData(color: Colors.white),
     textTheme: TextTheme(
       headline1: textDark,
       headline2: textDark,
@@ -63,6 +66,10 @@ abstract class TogetherTheme {
     ), // appbar
     bottomAppBarColor: bgLight, // 底部 appbar 颜色
     hintColor: Colors.black87,
+
+    buttonColor: Colors.black87,
+    cardColor: Colors.grey[300],
+    iconTheme: IconThemeData(color: Colors.black87),
     textTheme: TextTheme(
       headline1: textLight,
       headline2: textLight,

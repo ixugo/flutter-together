@@ -10,11 +10,19 @@ class ChangeThemeButton extends StatefulWidget {
 }
 
 class _ChangeThemeButtonState extends State<ChangeThemeButton> {
-  String currentAnimation = () {
-    return Global.profile.theme == 0 ? 'day_idle' : "night_idle";
-  }();
+  String currentAnimation;
 
   Widget build(BuildContext context) {
+    currentAnimation = () {
+      if (Global.profile.theme == 0) {
+        var t = MediaQuery.platformBrightnessOf(context);
+        return t == Brightness.light ? 'day_idle' : "night_idle";
+      }
+      return Global.profile.theme == 1 ? 'day_idle' : "night_idle";
+    }();
+
+    debugPrint("${MediaQuery.platformBrightnessOf(context)}");
+    // Theme.of(context).
     // 切换皮肤按钮
     return Container(
       height: 40,
@@ -27,7 +35,7 @@ class _ChangeThemeButtonState extends State<ChangeThemeButton> {
               currentAnimation = "switch_day";
             }
             Provider.of<ThemeModel>(context, listen: false).setTheme =
-                Global.profile.theme == 0 ? 1 : 0;
+                Global.profile.theme == 1 ? 2 : 1;
           },
           child: FlareActor(
             "assets/flrs/switch_daytime.flr",
