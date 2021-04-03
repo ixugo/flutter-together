@@ -6,14 +6,6 @@ double _salesTaxRate = 0.06;
 double _shippingCostPerItem = 7;
 
 class AppStateModel extends foundation.ChangeNotifier {
-  // 首页切换
-  int _appbarCurrentIndex = 0;
-  get curIndex => _appbarCurrentIndex;
-  setCurIndex(int x) {
-    _appbarCurrentIndex = x;
-    notifyListeners();
-  }
-
   // All the available products.
   List<Product> _availableProducts;
 

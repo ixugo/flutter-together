@@ -25,7 +25,7 @@ class _HomeContainerState extends State<LazyIndexedStack> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     return IndexedStack(
       children: createChildren(),
       index: widget.currentIndex,

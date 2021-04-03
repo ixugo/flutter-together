@@ -22,7 +22,7 @@ class WillPop extends StatelessWidget {
   // assert(false) 触发异常警报
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     //返回间隔时间
     DateTime _lastPressedAdt;
     // 没有自定义函数, 则使用默认方法

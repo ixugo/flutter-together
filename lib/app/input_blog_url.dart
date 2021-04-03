@@ -14,7 +14,7 @@ class AvatarBottomSheet extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     double subHeight = Apps.windowsHeight - 600;
     if (subHeight <= 0) subHeight = 0;
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -45,7 +45,7 @@ class AvatarBottomSheet extends StatelessWidget {
                     topRight: Radius.circular(15)),
                 child: Container(
                     decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
+                        color: Theme.of(ctx).scaffoldBackgroundColor,
                         boxShadow: [
                           BoxShadow(
                               blurRadius: 10,
@@ -54,7 +54,7 @@ class AvatarBottomSheet extends StatelessWidget {
                         ]),
                     width: double.infinity,
                     child: MediaQuery.removePadding(
-                        context: context, removeTop: true, child: child)),
+                        context: ctx, removeTop: true, child: child)),
               ),
             ),
           ]),
@@ -63,7 +63,7 @@ class AvatarBottomSheet extends StatelessWidget {
 }
 
 Future<T> showAvatarModalBottomSheet<T>({
-  BuildContext context,
+  BuildContext ctx,
   WidgetBuilder builder,
   Color backgroundColor,
   double elevation,
@@ -78,15 +78,15 @@ Future<T> showAvatarModalBottomSheet<T>({
   bool enableDrag = true,
   Duration duration,
 }) async {
-  assert(context != null);
+  assert(ctx != null);
   assert(builder != null);
   assert(expand != null);
   assert(useRootNavigator != null);
   assert(isDismissible != null);
   assert(enableDrag != null);
-  assert(debugCheckHasMediaQuery(context));
-  assert(debugCheckHasMaterialLocalizations(context));
-  final result = await Navigator.of(context, rootNavigator: useRootNavigator)
+  assert(debugCheckHasMediaQuery(ctx));
+  assert(debugCheckHasMaterialLocalizations(ctx));
+  final result = await Navigator.of(ctx, rootNavigator: useRootNavigator)
       .push(ModalBottomSheetRoute<T>(
     builder: builder,
     containerBuilder: (_, animation, child) => AvatarBottomSheet(
@@ -96,7 +96,7 @@ Future<T> showAvatarModalBottomSheet<T>({
     bounce: bounce,
     secondAnimationController: secondAnimation,
     expanded: expand,
-    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    barrierLabel: MaterialLocalizations.of(ctx).modalBarrierDismissLabel,
     isDismissible: isDismissible,
     modalBarrierColor: barrierColor,
     enableDrag: enableDrag,

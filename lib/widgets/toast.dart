@@ -234,7 +234,7 @@ class Toast {
 
 // ios 选择对话框
 Future<bool> showIosDialog(
-  BuildContext context, {
+  BuildContext ctx, {
   String title = "",
   String desc = "",
   String left = "取消", // 左侧按钮
@@ -245,19 +245,19 @@ Future<bool> showIosDialog(
     title: Padding(
       padding: EdgeInsets.only(bottom: 5),
       child: Text(title,
-          style: Theme.of(context).textTheme.subtitle1.copyWith(
+          style: Theme.of(ctx).textTheme.subtitle1.copyWith(
                 fontWeight: FontWeight.w600,
               )),
     ),
-    content: Text(desc, style: Theme.of(context).textTheme.subtitle1),
+    content: Text(desc, style: Theme.of(ctx).textTheme.subtitle1),
     actions: <Widget>[
       CupertinoDialogAction(
         child: Text(left),
-        onPressed: () => Navigator.pop(context, false),
+        onPressed: () => Navigator.pop(ctx, false),
       ),
       CupertinoDialogAction(
         child: Text(right),
-        onPressed: () => Navigator.pop(context, true),
+        onPressed: () => Navigator.pop(ctx, true),
       ),
     ],
   );
@@ -272,14 +272,13 @@ Future<bool> showIosDialog(
     child = dialog;
   }
 
-  bool temp =
-      await showCupertinoDialog(context: context, builder: (context) => child);
+  bool temp = await showCupertinoDialog(context: ctx, builder: (ctx) => child);
   return temp;
 }
 
 //
 Future<bool> showIosDialogSingleButton(
-  BuildContext context, {
+  BuildContext ctx, {
   String title = "",
   String desc = "",
   String right = "确定", // 右侧按钮
@@ -289,15 +288,15 @@ Future<bool> showIosDialogSingleButton(
     title: Padding(
       padding: EdgeInsets.only(bottom: 5),
       child: Text(title,
-          style: Theme.of(context).textTheme.subtitle1.copyWith(
+          style: Theme.of(ctx).textTheme.subtitle1.copyWith(
                 fontWeight: FontWeight.w600,
               )),
     ),
-    content: Text(desc, style: Theme.of(context).textTheme.subtitle1),
+    content: Text(desc, style: Theme.of(ctx).textTheme.subtitle1),
     actions: <Widget>[
       CupertinoDialogAction(
         child: Text(right),
-        onPressed: () => Navigator.pop(context, true),
+        onPressed: () => Navigator.pop(ctx, true),
       ),
     ],
   );
@@ -313,8 +312,8 @@ Future<bool> showIosDialogSingleButton(
   }
 
   bool temp = await showCupertinoDialog(
-    context: context,
-    builder: (context) => child,
+    context: ctx,
+    builder: (ctx) => child,
   );
   return temp;
 }

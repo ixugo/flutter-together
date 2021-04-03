@@ -46,7 +46,7 @@ class HomeView extends StatelessWidget {
       SharedAxisTransitionType.horizontal;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     debugPrint("build HomeView");
     return ChangeNotifierProvider(
       create: (_) => HomeModel(),
@@ -66,6 +66,7 @@ class HomeView extends StatelessWidget {
   Widget _buildWithModel(ctx, HomeModel am) {
     // final products = am.getProducts();
     return CustomScrollView(
+      // controller: ModalScrollController.of(ctx),
       semanticChildCount: 1, // 文件长度
       slivers: <Widget>[
         CupertinoSliverNavigationBar(
@@ -85,14 +86,15 @@ class HomeView extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 18,
                       backgroundImage: NetworkImage(
-                          "https://img.golang.space/1617351635695-xu2yhH.jpg"),
+                        "https://img.golang.space/1617351635695-xu2yhH.jpg",
+                      ),
                     ),
                     onTap: () {
                       showCupertinoModalBottomSheet(
                         expand: true,
                         context: ctx,
                         backgroundColor: Colors.transparent,
-                        builder: (context) => ModalWithNavigator(),
+                        builder: (ctx) => ControlView(),
                         duration: Duration(milliseconds: 370),
                         animationCurve: Curves.easeInOutQuad,
                       );
@@ -129,24 +131,24 @@ class HomeView extends StatelessWidget {
 }
 
 class CoursePage extends StatelessWidget {
-  onPressed(context) {
+  onPressed(ctx) {
     Future.delayed(
       Duration(milliseconds: 370),
       () => showAvatarModalBottomSheet(
         expand: true,
-        context: context,
+        ctx: ctx,
         backgroundColor: Colors.transparent,
-        builder: (context) => ModalInsideModal(),
+        builder: (ctx) => ModalInsideModal(),
       ),
     );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     return Container(
       padding: EdgeInsets.only(top: 50),
       // color: Colors.transparent,
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(ctx).backgroundColor,
       child: Column(
         children: [
           svgGirl,
@@ -159,7 +161,7 @@ class CoursePage extends StatelessWidget {
                 Size(double.infinity, 30),
               ),
             ),
-            onPressed: () => onPressed(context),
+            onPressed: () => onPressed(ctx),
             child: Text("点此输入博客地址"),
           ),
 
@@ -172,11 +174,11 @@ class CoursePage extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              Provider.of<HomeModel>(context, listen: false).isBindURL = false;
+              Provider.of<HomeModel>(ctx, listen: false).isBindURL = false;
             },
             child: Text(
               "点击此处预览博客列表",
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(ctx).textTheme.subtitle1,
             ),
           ),
 
@@ -199,7 +201,7 @@ class ProductRowItem extends StatelessWidget {
   final bool lastItem;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     final row = SafeArea(
       top: false,
       bottom: false,
@@ -248,7 +250,7 @@ class ProductRowItem extends StatelessWidget {
               semanticLabel: 'Add',
             ),
             onPressed: () {
-              final model = Provider.of<AppStateModel>(context);
+              final model = Provider.of<AppStateModel>(ctx);
               model.addProductToCart(product.id);
             },
           ),

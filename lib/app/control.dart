@@ -22,8 +22,8 @@ class UserInfoListTile {
   ]);
 }
 
-class ModalWithNavigator extends StatelessWidget {
-  const ModalWithNavigator({Key key}) : super(key: key);
+class ControlView extends StatelessWidget {
+  const ControlView({Key key}) : super(key: key);
 
   Widget getList() {
     List<UserInfoListTile> list = [
@@ -40,17 +40,18 @@ class ModalWithNavigator extends StatelessWidget {
       physics: new NeverScrollableScrollPhysics(), //禁用滑动事件
       padding: EdgeInsets.zero,
       itemCount: list.length,
-      itemBuilder: (context, index) {
+
+      itemBuilder: (ctx, index) {
         return ListTile(
           title: Text(
             list[index].title,
-            style: Theme.of(context).textTheme.bodyText2,
+            style: Theme.of(ctx).textTheme.bodyText2,
           ),
           onTap: list[index].action,
           trailing: list[index].trailing ??
               Icon(
                 Icons.keyboard_arrow_right,
-                color: Theme.of(context).iconTheme.color,
+                color: Theme.of(ctx).iconTheme.color,
               ),
         );
       },
@@ -60,61 +61,55 @@ class ModalWithNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return Material(
-        color: Colors.black87,
-        // child: Navigator(
-        // onGenerateRoute: (_) => MaterialPageRoute(
-        // builder: (context2) => Builder(
-        // builder: (context) =>
-        child: CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            backgroundColor: Theme.of(ctx).appBarTheme.color,
-            leading: Container(),
-            middle: Text(
-              '用户控制中心',
-              style: TextStyle(color: Theme.of(ctx).accentColor),
-            ),
+      color: Colors.black87,
+      child: CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          backgroundColor: Theme.of(ctx).appBarTheme.color,
+          leading: Container(),
+          middle: Text(
+            '用户控制中心',
+            style: TextStyle(color: Theme.of(ctx).accentColor),
           ),
-          child: SafeArea(
-            bottom: false,
-            child: ListView(
-                shrinkWrap: true,
-                controller: ModalScrollController.of(ctx),
-                children: [
-                  SizedBox(height: 50),
-                  infomation,
-                  SizedBox(height: 20),
-                  Center(
-                    child: Text("应用控制/皮肤/账号管理/等均在此"),
+        ),
+        child: SafeArea(
+          bottom: false,
+          child: ListView(
+              shrinkWrap: true,
+              controller: ModalScrollController.of(ctx),
+              children: [
+                SizedBox(height: 50),
+                infomation,
+                SizedBox(height: 20),
+                Center(
+                  child: Text("应用控制/皮肤/账号管理/等均在此"),
+                ),
+                SizedBox(height: 30),
+                Divider(height: 0),
+                getList(),
+                Divider(height: 0),
+                SizedBox(height: 300),
+                Center(
+                  child: Text(
+                    "version 0.1",
                   ),
-                  SizedBox(height: 30),
-                  Divider(height: 0),
-                  getList(),
-                  Divider(height: 0),
-                  SizedBox(height: 300),
-                  Center(
-                    child: Text(
-                      "version 0.1",
-                    ),
+                ),
+                Center(
+                  child: Text(
+                    "共享者列表 ...待补充",
                   ),
-                  Center(
-                    child: Text(
-                      "共享者列表 ...待补充",
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Future.delayed(
-                        Duration(milliseconds: 500),
-                        () => launchURL("https://github.com/ixugo/go-together"),
-                      );
-                    },
-                    child: Text("项目地址 : github.com/ixugo/go-together"),
-                  ),
-                ]),
-          ),
-          // ),
-          // ),
-          // ),
-        ));
+                ),
+                TextButton(
+                  onPressed: () {
+                    Future.delayed(
+                      Duration(milliseconds: 500),
+                      () => launchURL("https://github.com/ixugo/go-together"),
+                    );
+                  },
+                  child: Text("项目地址 : github.com/ixugo/go-together"),
+                ),
+              ]),
+        ),
+      ),
+    );
   }
 }

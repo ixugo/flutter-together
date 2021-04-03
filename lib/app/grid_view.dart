@@ -4,6 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_together/app/blog/blog.dart';
+import 'package:provider/provider.dart';
 
 List<Map> list = [
   {"img": "https://img.golang.space/shot-1617474467143.webp"},
@@ -24,15 +25,27 @@ List<Map> list = [
   {"img": "https://img.golang.space/shot-1617474562452.jpg"},
 ];
 
+class StaggeredModel extends ChangeNotifier {}
+
 class StaggeredView extends StatelessWidget {
   final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
   final ScrollController _scrollController = new ScrollController();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     debugPrint("build StaggeredView");
+
+    // return ChangeNotifierProvider(
+    //   create: (_) => StaggeredModel(),
+    //   child: Consumer<StaggeredModel>(builder: buildWithModel),
+    // );
+    //
+    return buildWithModel(ctx, null, null);
+  }
+
+  Widget buildWithModel(ctx, sm, _) {
     return Container(
       height: 1300,
-      // color: Theme.of(context).backgroundColor,
+      // color: Theme.of(ctx).backgroundColor,
       padding: EdgeInsets.only(left: 10, right: 10),
       child: new StaggeredGridView.countBuilder(
           //滑动控制器
@@ -86,20 +99,19 @@ class StaggeredView extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text("Title",
-                                        style: Theme.of(context)
+                                        style: Theme.of(ctx)
                                             .textTheme
                                             .bodyText1
                                             .copyWith(
-                                                color: Theme.of(context)
-                                                    .accentColor)),
+                                                color:
+                                                    Theme.of(ctx).accentColor)),
                                     Text(
                                       "2021-04-02 18:00",
-                                      style: Theme.of(context)
+                                      style: Theme.of(ctx)
                                           .textTheme
                                           .bodyText2
                                           .copyWith(
-                                              color: Theme.of(context)
-                                                  .accentColor),
+                                              color: Theme.of(ctx).accentColor),
                                     ),
                                   ],
                                 ),

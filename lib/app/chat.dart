@@ -10,16 +10,16 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> {
   @override
-  Widget build(BuildContext context) {
-    debugPrint("build SearchTab");
+  Widget build(BuildContext ctx) {
+    debugPrint("build ChatView");
     return CustomScrollView(
       slivers: <Widget>[
         CupertinoSliverNavigationBar(
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(ctx).backgroundColor,
           largeTitle: Text(
             "Together",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(ctx).accentColor,
             ),
           ),
         ),

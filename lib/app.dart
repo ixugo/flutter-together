@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_together/app/home.dart';
 import 'package:flutter_together/app/chat.dart';
 import 'package:flutter_together/common/lazy_load_stack.dart';
-import 'package:flutter_together/providers/app_state_model.dart';
+import 'package:flutter_together/providers/appbar.dart';
 import 'package:flutter_together/providers/theme.dart';
 import 'package:flutter_together/theme.dart';
 import 'package:flutter_together/widgets/will_pop_scope.dart';
@@ -32,7 +32,7 @@ class TogetherApp extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     // 安卓沉浸式状态栏
     if (Platform.isAndroid) {
       SystemUiOverlayStyle systemUiOverlayStyle =
@@ -75,15 +75,15 @@ class CupertinoHomePage extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext ctx) {
-    return Consumer<AppStateModel>(builder: _buildWithModel);
+    return Consumer<BottomAppbarModel>(builder: _buildWithModel);
   }
 
-  Widget _buildWithModel(ctx, AppStateModel am, _) {
+  Widget _buildWithModel(ctx, BottomAppbarModel bm, _) {
     var a = Theme.of(ctx).accentColor;
     return WillPop(
       child: Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
-          onTap: (int i) => am.setCurIndex(i),
+          onTap: (int i) => bm.setCurIndex(i),
           color: Theme.of(ctx).bottomAppBarColor,
           backgroundColor: Colors.transparent,
           animationDuration: Duration(milliseconds: 370),
@@ -91,7 +91,7 @@ class CupertinoHomePage extends StatelessWidget {
           items: pages.map((e) => Icon(e["icon"], size: 30)).toList(),
         ),
         body: LazyIndexedStack(
-          currentIndex: am.curIndex,
+          currentIndex: bm.curIndex,
           children: pages
               .map((e) => CupertinoPageScaffold(child: e["widget"] as Widget))
               .toList(),

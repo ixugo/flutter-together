@@ -1,36 +1,30 @@
 // 文章内容
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_together/common/global.dart';
 
 class OpenContainerWrapper extends StatelessWidget {
   OpenContainerWrapper({this.closedBuilder, this.transitionType, this.img});
 
-  // final Article data;
   final String img;
   final OpenContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
 
   @override
-  Widget build(BuildContext context) {
-    var i = img;
-    if (i == null) {
-      i = "https://img.golang.space/shot-1617474467143.webp";
-    }
+  Widget build(BuildContext ctx) {
     return OpenContainer(
       openColor: Colors.transparent,
-      closedColor: Theme.of(context).backgroundColor, // 同步背景色
+      closedColor: Theme.of(ctx).backgroundColor, // 同步背景色
       closedElevation: 0, // 关闭阴影
       transitionType: transitionType,
       openBuilder: (BuildContext context, VoidCallback _) {
-        return _detailsPage(context, i);
+        return _detailsPage(context, img);
       },
       tappable: false,
       closedBuilder: closedBuilder,
     );
   }
 
-  Widget _detailsPage(BuildContext context, String img) {
+  Widget _detailsPage(BuildContext ctx, String img) {
     return Scaffold(
         appBar: AppBar(
           title: const Text('详情'),
@@ -40,7 +34,7 @@ class OpenContainerWrapper extends StatelessWidget {
           children: [
             ListView(children: <Widget>[
               Container(
-                color: Theme.of(context).backgroundColor,
+                color: Theme.of(ctx).backgroundColor,
                 width: double.infinity,
                 height: 200,
                 child: Padding(
@@ -81,7 +75,7 @@ class OpenContainerWrapper extends StatelessWidget {
               //       shrinkWrap: true, //解决无限高度问题
               //       physics: new NeverScrollableScrollPhysics(), //禁用滑动
               //       children: [
-              //         Text("评论", style: Theme.of(context).textTheme.headline6),
+              //         Text("评论", style: Theme.of(ctx).textTheme.headline6),
               //       ]),
               // ),
             ]),

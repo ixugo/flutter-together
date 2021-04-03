@@ -12,17 +12,16 @@ class ChangeThemeButton extends StatefulWidget {
 class _ChangeThemeButtonState extends State<ChangeThemeButton> {
   String currentAnimation;
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     currentAnimation = () {
       if (Global.profile.theme == 0) {
-        var t = MediaQuery.platformBrightnessOf(context);
+        var t = MediaQuery.platformBrightnessOf(ctx);
         return t == Brightness.light ? 'day_idle' : "night_idle";
       }
       return Global.profile.theme == 1 ? 'day_idle' : "night_idle";
     }();
 
-    debugPrint("${MediaQuery.platformBrightnessOf(context)}");
-    // Theme.of(context).
+    // Theme.of(ctx).
     // 切换皮肤按钮
     return Container(
       height: 40,

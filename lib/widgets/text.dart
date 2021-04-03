@@ -6,10 +6,10 @@ class IText extends StatelessWidget {
   IText(this.c, {this.style = const TextStyle()});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     return Text(
       c,
-      style: style.copyWith(color: Theme.of(context).accentColor),
+      style: style.copyWith(color: Theme.of(ctx).accentColor),
     );
   }
 }
