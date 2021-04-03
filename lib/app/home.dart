@@ -22,6 +22,25 @@ final infomation = SvgPicture.asset(
 );
 final blogAdd = SvgPicture.asset("assets/images/blog_add.svg", height: 200);
 
+class HomeModel extends ChangeNotifier {
+  // 绑定博客 URL 切换动画
+  bool _isBindURL = true;
+  get isBindURL => _isBindURL;
+  set isBindURL(bool x) {
+    _isBindURL = x;
+    notifyListeners();
+  }
+
+  ScrollController sctrl = ScrollController();
+  bool isHeader = false;
+  setHeader(bool v) {
+    if (isHeader != v) {
+      isHeader = v;
+      notifyListeners();
+    }
+  }
+}
+
 class HomeView extends StatelessWidget {
   final SharedAxisTransitionType _transitionType =
       SharedAxisTransitionType.horizontal;
@@ -29,23 +48,25 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint("build HomeView");
-    return Consumer<AppStateModel>(builder: (ctx, am, child) {
-      am.sctrl.addListener(() {
-        if (am.sctrl.offset > 50) {
-          am.setHeader(true);
-        } else {
-          am.setHeader(true);
-        }
-      });
-
-      return _buildWithModel(ctx, am);
-    });
+    return ChangeNotifierProvider(
+      create: (_) => HomeModel(),
+      child: Consumer<HomeModel>(builder: (ctx, am, child) {
+        am.sctrl.addListener(() {
+          if (am.sctrl.offset > 50) {
+            am.setHeader(true);
+          } else {
+            am.setHeader(true);
+          }
+        });
+        return _buildWithModel(ctx, am);
+      }),
+    );
   }
 
-  Widget _buildWithModel(ctx, AppStateModel am) {
-    final products = am.getProducts();
+  Widget _buildWithModel(ctx, HomeModel am) {
+    // final products = am.getProducts();
     return CustomScrollView(
-      semanticChildCount: products.length, // 文件长度
+      semanticChildCount: 1, // 文件长度
       slivers: <Widget>[
         CupertinoSliverNavigationBar(
           backgroundColor: Colors.white.withOpacity(0),
@@ -151,8 +172,7 @@ class CoursePage extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              Provider.of<AppStateModel>(context, listen: false).isBindURL =
-                  false;
+              Provider.of<HomeModel>(context, listen: false).isBindURL = false;
             },
             child: Text(
               "点击此处预览博客列表",
