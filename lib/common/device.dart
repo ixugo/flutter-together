@@ -18,7 +18,7 @@ class Apps {
   static bool isProduction = const bool.fromEnvironment("dart.vm.product");
 
   static void enableDebugPaint() {
-    final pixe = MediaQueryData.fromWindow(window).devicePixelRatio;
+    // final pixe = MediaQueryData.fromWindow(window).devicePixelRatio;
     // Logs.debug('pixe: $pixe');
     // debugPaintSizeEnabled = true;
     // debugPaintLayerBordersEnabled = true;

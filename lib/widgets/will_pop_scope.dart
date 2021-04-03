@@ -4,6 +4,7 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_together/widgets/toast.dart';
 
 /// [WillPop] 退出提示,避免误操作, 用于未存储数据返回等场景
 class WillPop extends StatelessWidget {
@@ -31,7 +32,7 @@ class WillPop extends StatelessWidget {
           if (_lastPressedAdt == null ||
               DateTime.now().difference(_lastPressedAdt) >
                   Duration(milliseconds: 2000)) {
-            // showError(desc, Duration(milliseconds: 1600));
+            showError(desc, Duration(milliseconds: 1600));
             //两次点击时间间隔超过1秒则重新计时
             _lastPressedAdt = DateTime.now();
             return false; // 禁止返回
