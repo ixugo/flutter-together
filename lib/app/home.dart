@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_together/app/bt.dart';
+import 'package:flutter_together/app/input_blog_url.dart';
 import 'package:flutter_together/app/control.dart';
 import 'package:flutter_together/providers/app_state_model.dart';
 import 'package:flutter_together/styles.dart';
