@@ -5,8 +5,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_together/app/product_list_tab.dart';
-import 'package:flutter_together/app/search_tab.dart';
+import 'package:flutter_together/app/home.dart';
+import 'package:flutter_together/app/chat.dart';
 import 'package:flutter_together/common/lazy_load_stack.dart';
 import 'package:flutter_together/providers/app_state_model.dart';
 import 'package:flutter_together/providers/theme.dart';
@@ -65,11 +65,11 @@ class TogetherApp extends StatelessWidget {
 class CupertinoHomePage extends StatelessWidget {
   final List<Map> pages = [
     {
-      "widget": ProductListTab(),
+      "widget": HomeView(),
       "icon": Icons.attachment,
     },
     {
-      "widget": SearchTab(),
+      "widget": ChatView(),
       "icon": CupertinoIcons.chat_bubble_2,
     },
   ];

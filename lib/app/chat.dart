@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SearchTab extends StatefulWidget {
+class ChatView extends StatefulWidget {
   @override
-  _SearchTabState createState() {
-    return _SearchTabState();
+  _ChatViewState createState() {
+    return _ChatViewState();
   }
 }
 
-class _SearchTabState extends State<SearchTab> {
+class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
+    debugPrint("build SearchTab");
     return CustomScrollView(
       slivers: <Widget>[
         CupertinoSliverNavigationBar(
@@ -22,6 +23,13 @@ class _SearchTabState extends State<SearchTab> {
             ),
           ),
         ),
+        SliverToBoxAdapter(
+            child: Container(
+          padding: EdgeInsets.only(top: 50),
+          child: Center(
+            child: Text("通讯聊天, 敬请期待"),
+          ),
+        ))
       ],
     );
   }

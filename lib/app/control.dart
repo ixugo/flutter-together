@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_together/app/button/button.dart';
-import 'package:flutter_together/app/product_list_tab.dart';
+import 'package:flutter_together/app/home.dart';
 import 'package:flutter_together/widgets/url_lanch.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -9,10 +9,17 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 class UserInfoListTile {
   final String title; // 名称
   final IconData icon; // 图标
+  final String subTitle; // 描述
   final Function action; // 动作
   Widget trailing; // 右侧开关
 
-  UserInfoListTile(this.title, [this.icon, this.action, this.trailing]);
+  UserInfoListTile(
+    this.title, [
+    this.icon,
+    this.action,
+    this.trailing,
+    this.subTitle,
+  ]);
 }
 
 class ModalWithNavigator extends StatelessWidget {
@@ -23,7 +30,7 @@ class ModalWithNavigator extends StatelessWidget {
       UserInfoListTile(
         "切换主题",
         Icons.art_track,
-        null,
+        () => {},
         ChangeThemeButton(),
       )
     ];
@@ -39,10 +46,6 @@ class ModalWithNavigator extends StatelessWidget {
             list[index].title,
             style: Theme.of(context).textTheme.bodyText2,
           ),
-          // leading: Icon(
-          //   userInfolisttile[index].icon,
-          //   color: Theme.of(context).iconTheme.color,
-          // ),
           onTap: list[index].action,
           trailing: list[index].trailing ??
               Icon(

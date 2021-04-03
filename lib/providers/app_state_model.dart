@@ -14,6 +14,14 @@ class AppStateModel extends foundation.ChangeNotifier {
     notifyListeners();
   }
 
+  // 绑定博客 URL 切换动画
+  bool _isBindURL = true;
+  get isBindURL => _isBindURL;
+  set isBindURL(bool x) {
+    _isBindURL = x;
+    notifyListeners();
+  }
+
   ScrollController sctrl = ScrollController();
   bool isHeader = false;
   setHeader(bool v) {
