@@ -11,6 +11,7 @@ import 'package:flutter_together/common/lazy_load_stack.dart';
 import 'package:flutter_together/providers/appbar.dart';
 import 'package:flutter_together/providers/theme.dart';
 import 'package:flutter_together/theme.dart';
+import 'package:flutter_together/widgets/keep_alive.dart';
 import 'package:flutter_together/widgets/will_pop_scope.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -62,17 +63,19 @@ class TogetherApp extends StatelessWidget {
   }
 }
 
+class AppPage {
+  final Widget w;
+  final IconData icon;
+
+  AppPage(this.w, this.icon);
+}
+
+final List<AppPage> pages = [
+  AppPage(HomeView(), Icons.attachment),
+  AppPage(ChatView(), CupertinoIcons.chat_bubble_2),
+];
+
 class CupertinoHomePage extends StatelessWidget {
-  final List<Map> pages = [
-    {
-      "widget": HomeView(),
-      "icon": Icons.attachment,
-    },
-    {
-      "widget": ChatView(),
-      "icon": CupertinoIcons.chat_bubble_2,
-    },
-  ];
   @override
   Widget build(BuildContext ctx) {
     return Consumer<BottomAppbarModel>(builder: _buildWithModel);
@@ -87,13 +90,11 @@ class CupertinoHomePage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           animationDuration: Duration(milliseconds: 370),
           height: Platform.isIOS ? 65 : 60,
-          items: pages.map((e) => Icon(e["icon"], size: 30)).toList(),
+          items: pages.map((e) => Icon(e.icon, size: 30)).toList(),
         ),
         body: LazyIndexedStack(
           currentIndex: bm.curIndex,
-          children: pages
-              .map((e) => CupertinoPageScaffold(child: e["widget"] as Widget))
-              .toList(),
+          children: pages.map((e) => e.w).toList(),
         ),
       ),
     );

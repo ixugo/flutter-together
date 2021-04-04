@@ -6,6 +6,7 @@ import 'package:flutter_together/app/input_blog_url.dart';
 import 'package:flutter_together/app/control.dart';
 import 'package:flutter_together/providers/app_state_model.dart';
 import 'package:flutter_together/styles.dart';
+import 'package:flutter_together/widgets/keep_alive.dart';
 import 'package:flutter_together/widgets/toast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,6 @@ class HomeModel extends ChangeNotifier {
 }
 
 //
-// TODO 调用  showCupertinoModalBottomSheet 异常刷新
 
 class HomeView extends StatelessWidget {
   final SharedAxisTransitionType _transitionType =
@@ -50,7 +50,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    debugPrint("build HomeView");
+    debugPrint("build HomeView StatelessWidget");
     return ChangeNotifierProvider(
       create: (_) => HomeModel(),
       child: Consumer<HomeModel>(builder: (ctx, am, child) {
@@ -67,6 +67,7 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _buildWithModel(ctx, HomeModel am) {
+    debugPrint("build HomeView _buildWithModel");
     // final products = am.getProducts();
     return CustomScrollView(
       // controller: ModalScrollController.of(ctx),
@@ -93,6 +94,8 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
+// TODO 调用  showCupertinoModalBottomSheet 异常刷新
+
                       showCupertinoModalBottomSheet(
                         expand: true,
                         context: ctx,
@@ -148,7 +151,7 @@ class InputBlogURLView extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    debugPrint("build CoursePage");
+    debugPrint("build InputBlogURLView");
     return Container(
       padding: EdgeInsets.only(top: 50),
       // color: Colors.transparent,

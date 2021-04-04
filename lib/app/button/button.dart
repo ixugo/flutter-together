@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_together/app.dart';
 import 'package:flutter_together/common/global.dart';
 import 'package:flutter_together/providers/theme.dart';
 import 'package:provider/provider.dart';
@@ -10,21 +11,24 @@ class ChangeThemeButton extends StatefulWidget {
 }
 
 class _ChangeThemeButtonState extends State<ChangeThemeButton> {
-  String currentAnimation;
+  String currentAnimation =
+      Global.profile.theme == 1 ? 'day_idle' : "night_idle";
+
+  @override
+  void initState() {
+    super.initState();
+    if (Global.profile.theme == 0) {
+      var t = MediaQuery.platformBrightnessOf(navigatorKey.currentContext);
+      currentAnimation = t == Brightness.light ? 'day_idle' : "night_idle";
+    }
+  }
 
   Widget build(BuildContext ctx) {
-    currentAnimation = () {
-      if (Global.profile.theme == 0) {
-        var t = MediaQuery.platformBrightnessOf(ctx);
-        return t == Brightness.light ? 'day_idle' : "night_idle";
-      }
-      return Global.profile.theme == 1 ? 'day_idle' : "night_idle";
-    }();
+    debugPrint("build ChangeThemeButton theme: ${Global.profile.theme}");
 
-    // Theme.of(ctx).
     // 切换皮肤按钮
     return Container(
-      height: 40,
+      height: 45,
       width: 50,
       child: GestureDetector(
           onTap: () {
@@ -44,18 +48,15 @@ class _ChangeThemeButtonState extends State<ChangeThemeButton> {
             animation: currentAnimation,
             callback: (animationName) {
               switch (animationName) {
+                // 更新按钮动画
                 case "switch_day":
-                  setState(() {
+                  return setState(() {
                     currentAnimation = "day_idle";
                   });
-                  break;
                 case "switch_night":
-                  setState(() {
+                  return setState(() {
                     currentAnimation = "night_idle";
                   });
-
-                  break;
-                default:
               }
             },
           )),

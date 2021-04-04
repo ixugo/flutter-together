@@ -42,6 +42,32 @@ class StaggeredView extends StatelessWidget {
   }
 
   Widget buildWithModel(ctx, sm, _) {
+    Widget content = Expanded(
+      child: Center(
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Title",
+                style: Theme.of(ctx)
+                    .textTheme
+                    .bodyText1
+                    .copyWith(color: Theme.of(ctx).accentColor),
+              ),
+              Text(
+                "2021-04-02 18:00",
+                style: Theme.of(ctx)
+                    .textTheme
+                    .bodyText2
+                    .copyWith(color: Theme.of(ctx).accentColor),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
     return Container(
       height: 1300,
       // color: Theme.of(ctx).backgroundColor,
@@ -63,10 +89,11 @@ class StaggeredView extends StatelessWidget {
           mainAxisSpacing: 15,
           crossAxisSpacing: 15,
           staggeredTileBuilder: (index) => StaggeredTile.fit(1),
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (BuildContext ctx, int i) {
             return OpenContainerWrapper(
+              key: Key(i.toString()),
               transitionType: _transitionType,
-              img: list[index]["img"] as String,
+              img: list[i]["img"] as String,
               closedBuilder: (BuildContext _, VoidCallback openContainer) {
                 return Card(
                   elevation: 1,
@@ -74,7 +101,7 @@ class StaggeredView extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   child: SizedBox(
                     //随机生成高度
-                    height: 180 + Random(index).nextInt(20) * 5.0,
+                    height: 180 + Random(i).nextInt(20) * 5.0,
                     width: 20,
                     child: InkWell(
                       onTap: openContainer,
@@ -87,36 +114,10 @@ class StaggeredView extends StatelessWidget {
                             ),
                             child: Image(
                               fit: BoxFit.cover,
-                              image: NetworkImage(list[index]["img"]),
+                              image: NetworkImage(list[i]["img"]),
                             ),
                           ),
-                          Expanded(
-                            child: Center(
-                              child: Container(
-                                width: double.infinity,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Title",
-                                        style: Theme.of(ctx)
-                                            .textTheme
-                                            .bodyText1
-                                            .copyWith(
-                                                color:
-                                                    Theme.of(ctx).accentColor)),
-                                    Text(
-                                      "2021-04-02 18:00",
-                                      style: Theme.of(ctx)
-                                          .textTheme
-                                          .bodyText2
-                                          .copyWith(
-                                              color: Theme.of(ctx).accentColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          content,
                         ],
                       ),
                     ),
