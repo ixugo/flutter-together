@@ -12,8 +12,8 @@ class Profile {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['theme'] = this.theme;
-    data['blog_url'] = this.blogUrl;
+    data['theme'] = this.theme ?? 0;
+    data['blog_url'] = this.blogUrl ?? "";
     return data;
   }
 }

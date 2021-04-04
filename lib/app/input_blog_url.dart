@@ -15,7 +15,7 @@ class AvatarBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    double subHeight = Apps.windowsHeight - 600;
+    double subHeight = Apps.windowsHeight * 0.25;
     if (subHeight <= 0) subHeight = 0;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,

@@ -71,7 +71,7 @@ class StaggeredView extends StatelessWidget {
     return Container(
       height: 1300,
       // color: Theme.of(ctx).backgroundColor,
-      padding: EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.only(left: 10, right: 10, top: 20),
       child: new StaggeredGridView.countBuilder(
           //滑动控制器
           controller: _scrollController,

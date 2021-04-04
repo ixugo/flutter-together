@@ -73,39 +73,48 @@ class ControlView extends StatelessWidget {
         ),
         child: SafeArea(
           bottom: false,
-          child: ListView(
-              shrinkWrap: true,
-              controller: ModalScrollController.of(ctx),
+          child: Column(
+              // shrinkWrap: true,
+              // controller: ModalScrollController.of(ctx),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(height: 50),
-                infomation,
-                SizedBox(height: 20),
-                Center(
-                  child: Text("应用控制/皮肤/账号管理/等均在此"),
+                Column(
+                  children: [
+                    SizedBox(height: 50),
+                    infomation,
+                    SizedBox(height: 20),
+                    Center(
+                      child: Text("应用控制/皮肤/账号管理/等均在此"),
+                    ),
+                    SizedBox(height: 30),
+                    Divider(height: 0),
+                    getList(),
+                    Divider(height: 0),
+                  ],
                 ),
-                SizedBox(height: 30),
-                Divider(height: 0),
-                getList(),
-                Divider(height: 0),
-                SizedBox(height: 300),
-                Center(
-                  child: Text(
-                    "version 0.1",
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    "共享者列表 ...待补充",
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Future.delayed(
-                      Duration(milliseconds: 500),
-                      () => launchURL("https://github.com/ixugo/go-together"),
-                    );
-                  },
-                  child: Text("项目地址 : github.com/ixugo/go-together"),
+                Column(
+                  children: [
+                    Center(
+                      child: Text(
+                        "version 0.1",
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "贡献者列表 ...",
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Future.delayed(
+                          Duration(milliseconds: 500),
+                          () =>
+                              launchURL("https://github.com/ixugo/go-together"),
+                        );
+                      },
+                      child: Text("项目地址 : github.com/ixugo/go-together"),
+                    ),
+                  ],
                 ),
               ]),
         ),

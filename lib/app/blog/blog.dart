@@ -2,10 +2,10 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_together/app.dart';
-import 'package:flutter_together/common/device.dart';
-import 'package:flutter_together/widgets/toast.dart';
 
+// TODO 下啦后上滑会引发异常
 class BlogDetalView extends StatefulWidget {
   final String img;
   final Key key;
@@ -17,25 +17,46 @@ class BlogDetalView extends StatefulWidget {
 class BlogDetalViewState extends State<BlogDetalView> {
   final ScrollController ctrl = ScrollController();
   bool isListener = true;
+  double circular = 0;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     ctrl.addListener(() {
-      debugPrint("滑动: ${ctrl.offset}");
-
       if (ctrl.offset < 0) {
         if (ctrl.offset < -50 && isListener) {
           isListener = false;
-          navigatorKey.currentState.pop();
-          debugPrint("pop 页面1: ${ctrl.offset}");
+
+          Future.delayed(Duration(milliseconds: 600), () {
+            SystemChrome.setEnabledSystemUIOverlays(
+                [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+            if (mounted) {
+              navigatorKey.currentState.pop();
+            }
+          });
+
+          debugPrint("pop 页面: ${ctrl.offset}");
           return;
         }
 
         if (mounted) {
           setState(() {
-            end = ctrl.offset.abs();
+            end = ctrl.offset.abs() < 40 ? ctrl.offset.abs() : 40;
+            circular = getCircular();
+            debugPrint("滑动: ${ctrl.offset}  circular:$circular");
           });
         }
+      }
+
+      if (ctrl.offset > 0 && end != 0) {
+        setState(() {
+          end = 0;
+        });
       }
     });
 
@@ -44,55 +65,43 @@ class BlogDetalViewState extends State<BlogDetalView> {
 
   double end = 0;
 
+  double getCircular() {
+    if (ctrl.offset < -1 && ctrl.offset > -20) {
+      return ctrl.offset.abs() / 2;
+    }
+    if (ctrl.offset < -20) {
+      return 10;
+    }
+    return 0;
+  }
+
   @override
   Widget build(BuildContext ctx) {
-    var w = Listener(
-      onPointerDown: (v) {
-        // 记录按下位置
-        debugPrint("指针按下: ${v.localPosition.dy}");
-      },
-      onPointerMove: (v) {
-        if (ctrl.offset < 0) {
-          // 与按下位置比较滑动位置
-          debugPrint("指针移动 触发关闭页面: ${v.localPosition.dy}  ${ctrl.offset}");
-        }
-      },
-      child: _buildBody(ctx, widget.img),
-    );
-
-    return TweenAnimationBuilder(
+    return TweenAnimationBuilder<double>(
       tween: Tween<double>(begin: 0, end: end),
-      duration: Duration(milliseconds: 1000),
-      builder: (ctx, v, _) {
+      duration: Duration(milliseconds: 80),
+      curve: Curves.easeOutBack,
+      builder: (ctx, double v, _) {
         if (!mounted) {
-          return Container();
+          return Material();
         }
 
+        if (v == null) v = 0;
         return Material(
           color: Theme.of(ctx).backgroundColor.withOpacity(0.5),
-          child: Padding(padding: EdgeInsets.all(v), child: w),
+          child: Padding(
+            padding:
+                EdgeInsets.only(left: v, right: v, top: v * 2, bottom: v * 2),
+            child: _buildBody(ctx, widget.img),
+          ),
         );
       },
     );
   }
 
   Widget _buildBody(ctx, img) {
-    Widget w = ListView(
-      controller: ctrl,
-      padding: EdgeInsets.zero,
+    Widget w = Column(
       children: [
-        Container(
-          color: Theme.of(ctx).backgroundColor,
-          width: double.infinity,
-          height: 200,
-          child: ClipRRect(
-            // borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              img,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
         SizedBox(height: 10),
         Center(
           child: Text("博文内容"),
@@ -104,12 +113,42 @@ class BlogDetalViewState extends State<BlogDetalView> {
       ],
     );
 
+    final double height = 220;
+    w = CustomScrollView(
+      controller: ctrl,
+      slivers: [
+        SliverAppBar(
+          backgroundColor: Colors.transparent,
+          key: Key("2"),
+          expandedHeight: height,
+          automaticallyImplyLeading: false,
+          flexibleSpace: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+            return ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(circular - 2),
+                topRight: Radius.circular(circular - 2),
+              ),
+              child: Image.network(
+                img,
+                fit: BoxFit.cover,
+              ),
+            );
+          }),
+        ),
+        SliverToBoxAdapter(
+          key: Key("1"),
+          child: w,
+        )
+      ],
+    );
+
     //  TODO 避免遮挡,底部加一层模糊图片
     w = Stack(
       children: [
         w,
         Align(
-          alignment: Alignment(0.9, -0.9),
+          alignment: Alignment(0.9, -0.95),
           child: InkWell(
             onTap: () => Navigator.pop(ctx),
             child: CircleAvatar(
@@ -124,6 +163,7 @@ class BlogDetalViewState extends State<BlogDetalView> {
     );
 
     return Material(
+      borderRadius: BorderRadius.circular(circular),
       color: Theme.of(ctx).scaffoldBackgroundColor,
       child: w,
     );

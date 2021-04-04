@@ -11,7 +11,6 @@ import 'package:flutter_together/common/lazy_load_stack.dart';
 import 'package:flutter_together/providers/appbar.dart';
 import 'package:flutter_together/providers/theme.dart';
 import 'package:flutter_together/theme.dart';
-import 'package:flutter_together/widgets/keep_alive.dart';
 import 'package:flutter_together/widgets/will_pop_scope.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';

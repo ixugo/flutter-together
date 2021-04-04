@@ -6,7 +6,6 @@ import 'package:flutter_together/app/input_blog_url.dart';
 import 'package:flutter_together/app/control.dart';
 import 'package:flutter_together/providers/app_state_model.dart';
 import 'package:flutter_together/styles.dart';
-import 'package:flutter_together/widgets/keep_alive.dart';
 import 'package:flutter_together/widgets/toast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -94,8 +93,6 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-// TODO 调用  showCupertinoModalBottomSheet 异常刷新
-
                       showCupertinoModalBottomSheet(
                         expand: true,
                         context: ctx,
@@ -154,7 +151,6 @@ class InputBlogURLView extends StatelessWidget {
     debugPrint("build InputBlogURLView");
     return Container(
       padding: EdgeInsets.only(top: 50),
-      // color: Colors.transparent,
       color: Theme.of(ctx).backgroundColor,
       child: Column(
         children: [
