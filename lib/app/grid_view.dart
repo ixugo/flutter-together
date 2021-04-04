@@ -4,7 +4,6 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_together/app/blog/blog.dart';
-import 'package:provider/provider.dart';
 
 List<Map> list = [
   {"img": "https://img.golang.space/shot-1617474467143.webp"},
@@ -75,7 +74,7 @@ class StaggeredView extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   child: SizedBox(
                     //随机生成高度
-                    height: 180 + Random().nextInt(10) * 6.0,
+                    height: 180 + Random(index).nextInt(20) * 5.0,
                     width: 20,
                     child: InkWell(
                       onTap: openContainer,

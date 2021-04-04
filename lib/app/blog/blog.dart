@@ -12,6 +12,7 @@ class OpenContainerWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return OpenContainer(
+      transitionDuration: Duration(milliseconds: 370),
       openColor: Colors.transparent,
       closedColor: Theme.of(ctx).backgroundColor, // 同步背景色
       closedElevation: 0, // 关闭阴影

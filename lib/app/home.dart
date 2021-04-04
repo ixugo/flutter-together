@@ -41,6 +41,9 @@ class HomeModel extends ChangeNotifier {
   }
 }
 
+//
+// TODO 调用  showCupertinoModalBottomSheet 异常刷新
+
 class HomeView extends StatelessWidget {
   final SharedAxisTransitionType _transitionType =
       SharedAxisTransitionType.horizontal;
@@ -122,7 +125,7 @@ class HomeView extends StatelessWidget {
                 transitionType: _transitionType,
               );
             },
-            child: am.isBindURL ? CoursePage() : StaggeredView(),
+            child: am.isBindURL ? InputBlogURLView() : StaggeredView(),
           ),
         ),
       ],
@@ -130,7 +133,7 @@ class HomeView extends StatelessWidget {
   }
 }
 
-class CoursePage extends StatelessWidget {
+class InputBlogURLView extends StatelessWidget {
   onPressed(ctx) {
     Future.delayed(
       Duration(milliseconds: 370),
@@ -145,6 +148,7 @@ class CoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
+    debugPrint("build CoursePage");
     return Container(
       padding: EdgeInsets.only(top: 50),
       // color: Colors.transparent,

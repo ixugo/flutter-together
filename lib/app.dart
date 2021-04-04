@@ -79,7 +79,6 @@ class CupertinoHomePage extends StatelessWidget {
   }
 
   Widget _buildWithModel(ctx, BottomAppbarModel bm, _) {
-    var a = Theme.of(ctx).accentColor;
     return WillPop(
       child: Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
