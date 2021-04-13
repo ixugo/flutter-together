@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_together/app/button/button.dart';
-import 'package:flutter_together/app/home.dart';
+import 'package:flutter_together/view/button/button.dart';
+import 'package:flutter_together/view/home.dart';
 import 'package:flutter_together/widgets/url_lanch.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // 操作列表类
 class UserInfoListTile {

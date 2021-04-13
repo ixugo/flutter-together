@@ -2,10 +2,10 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_together/app/input_blog_url.dart';
-import 'package:flutter_together/app/control.dart';
 import 'package:flutter_together/providers/app_state_model.dart';
 import 'package:flutter_together/styles.dart';
+import 'package:flutter_together/view/control.dart';
+import 'package:flutter_together/view/input_blog_url.dart';
 import 'package:flutter_together/widgets/toast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -136,7 +136,7 @@ class HomeView extends StatelessWidget {
 class InputBlogURLView extends StatelessWidget {
   onPressed(ctx) {
     Future.delayed(
-      Duration(milliseconds: 370),
+      Duration(milliseconds: 300),
       () => showAvatarModalBottomSheet(
         expand: true,
         ctx: ctx,

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_together/app/blog/blog.dart';
+import 'package:flutter_together/view/blog/blog.dart';
 
 List<Map> list = [
   {"img": "https://img.golang.space/shot-1617474467143.webp"},
