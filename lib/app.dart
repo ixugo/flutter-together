@@ -33,6 +33,10 @@ class TogetherApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
+    // 强制竖屏
+    SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    );
     // 安卓沉浸式状态栏
     if (Platform.isAndroid) {
       SystemUiOverlayStyle systemUiOverlayStyle =

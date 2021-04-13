@@ -2,6 +2,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_together/app.dart';
 import 'package:flutter_together/common/global.dart';
+import 'package:flutter_together/common/log.dart';
 import 'package:flutter_together/providers/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class _ChangeThemeButtonState extends State<ChangeThemeButton> {
   }
 
   Widget build(BuildContext ctx) {
-    debugPrint("build ChangeThemeButton theme: ${Global.profile.theme}");
+    logs.i("build ChangeThemeButton theme: ${Global.profile.theme}");
 
     // 切换皮肤按钮
     return Container(

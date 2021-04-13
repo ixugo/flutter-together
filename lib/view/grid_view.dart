@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_together/common/log.dart';
 import 'package:flutter_together/view/blog/blog.dart';
 
 List<Map> list = [
@@ -31,7 +32,7 @@ class StaggeredView extends StatelessWidget {
   final ScrollController _scrollController = new ScrollController();
   @override
   Widget build(BuildContext ctx) {
-    debugPrint("build StaggeredView");
+    logs.i("build StaggeredView");
 
     // return ChangeNotifierProvider(
     //   create: (_) => StaggeredModel(),

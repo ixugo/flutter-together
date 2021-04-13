@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_together/app.dart';
+import 'package:flutter_together/common/log.dart';
 
 // TODO 下啦后上滑会引发异常
 class BlogDetalView extends StatefulWidget {
@@ -40,7 +41,7 @@ class BlogDetalViewState extends State<BlogDetalView> {
             }
           });
 
-          debugPrint("pop 页面: ${ctrl.offset}");
+          logs.i("pop 页面: ${ctrl.offset}");
           return;
         }
 
@@ -48,7 +49,7 @@ class BlogDetalViewState extends State<BlogDetalView> {
           setState(() {
             end = ctrl.offset.abs() < 40 ? ctrl.offset.abs() : 40;
             circular = getCircular();
-            debugPrint("滑动: ${ctrl.offset}  circular:$circular");
+            logs.i("滑动: ${ctrl.offset}  circular:$circular");
           });
         }
       }

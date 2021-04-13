@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_together/common/log.dart';
 
 class ChatView extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class ChatView extends StatefulWidget {
 class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext ctx) {
-    debugPrint("build ChatView");
+    logs.i("build ChatView");
     return CustomScrollView(
       slivers: <Widget>[
         CupertinoSliverNavigationBar(
