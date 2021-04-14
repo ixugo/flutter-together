@@ -92,16 +92,20 @@ class ControlView extends StatelessWidget {
                   ],
                 ),
                 Column(
+                  // mainAxisAlignment: MainAxisAlignment.,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Text(
-                        "version 0.1",
-                      ),
+                    Text(
+                      "version 0.1",
+                      style: TextStyle(fontSize: 10),
                     ),
-                    Center(
-                      child: Text(
-                        "贡献者列表 ...",
-                      ),
+                    Text(
+                      "著 作 者 : ixugo",
+                      style: TextStyle(fontSize: 11),
+                    ),
+                    Text(
+                      "贡 献 者 : 王博",
+                      style: TextStyle(fontSize: 11),
                     ),
                     TextButton(
                       onPressed: () {

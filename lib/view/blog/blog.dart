@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_together/app.dart';
 import 'package:flutter_together/common/log.dart';
+import 'package:flutter_together/models/article.dart';
+import 'package:flutter_together/widgets/webview.dart';
 
 // TODO 下啦后上滑会引发异常
 class BlogDetalView extends StatefulWidget {
-  final String img;
+  final Article article;
   final Key key;
-  BlogDetalView({this.key, this.img}) : super(key: key);
+  BlogDetalView({this.key, this.article}) : super(key: key);
   @override
   BlogDetalViewState createState() => BlogDetalViewState();
 }
@@ -93,7 +95,7 @@ class BlogDetalViewState extends State<BlogDetalView> {
           child: Padding(
             padding:
                 EdgeInsets.only(left: v, right: v, top: v * 2, bottom: v * 2),
-            child: _buildBody(ctx, widget.img),
+            child: _buildBody(ctx, widget.article.img),
           ),
         );
       },
@@ -101,17 +103,9 @@ class BlogDetalViewState extends State<BlogDetalView> {
   }
 
   Widget _buildBody(ctx, img) {
-    Widget w = Column(
-      children: [
-        SizedBox(height: 10),
-        Center(
-          child: Text("博文内容"),
-        ),
-        SizedBox(height: 1000),
-        Center(
-          child: Text("结束"),
-        ),
-      ],
+    Widget w = Container(
+      margin: EdgeInsets.only(top: 10),
+      child: WebPage(widget.article.link),
     );
 
     final double height = 220;
@@ -173,11 +167,11 @@ class BlogDetalViewState extends State<BlogDetalView> {
 
 class OpenContainerWrapper extends StatelessWidget {
   OpenContainerWrapper(
-      {this.key, this.closedBuilder, this.transitionType, this.img})
+      {this.key, this.closedBuilder, this.transitionType, this.article})
       : super(key: key);
 
   final Key key;
-  final String img;
+  final Article article;
   final OpenContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
 
@@ -191,8 +185,8 @@ class OpenContainerWrapper extends StatelessWidget {
       transitionType: transitionType,
       openBuilder: (BuildContext ctx, VoidCallback _) {
         return BlogDetalView(
-          key: Key(img),
-          img: img,
+          key: Key(article.link),
+          article: article,
         );
       },
       tappable: false,

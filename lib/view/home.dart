@@ -2,9 +2,10 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_together/app.dart';
+import 'package:flutter_together/common/global.dart';
 import 'package:flutter_together/common/log.dart';
-import 'package:flutter_together/providers/app_state_model.dart';
-import 'package:flutter_together/styles.dart';
+import 'package:flutter_together/providers/blog.dart';
 import 'package:flutter_together/view/control.dart';
 import 'package:flutter_together/view/input_blog_url.dart';
 import 'package:flutter_together/widgets/toast.dart';
@@ -25,7 +26,14 @@ final blogAdd = SvgPicture.asset("assets/images/blog_add.svg", height: 200);
 
 class HomeModel extends ChangeNotifier {
   // 绑定博客 URL 切换动画
-  bool _isBindURL = true;
+  bool _isBindURL = () {
+    // 验证域名
+    RegExp url = new RegExp(r"^http(s)?://");
+    if (url.hasMatch(Global.profile.blogUrl)) {
+      return false;
+    }
+    return true;
+  }();
   get isBindURL => _isBindURL;
   set isBindURL(bool x) {
     _isBindURL = x;
@@ -51,8 +59,11 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     logs.i("build HomeView StatelessWidget");
-    return ChangeNotifierProvider(
-      create: (_) => HomeModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => HomeModel()),
+        ChangeNotifierProvider(create: (_) => BlogModel()),
+      ],
       child: Consumer<HomeModel>(builder: (ctx, am, child) {
         am.sctrl.addListener(() {
           if (am.sctrl.offset > 50) {
@@ -126,7 +137,7 @@ class HomeView extends StatelessWidget {
                 transitionType: _transitionType,
               );
             },
-            child: am.isBindURL ? InputBlogURLView() : StaggeredView(),
+            child: am.isBindURL ? InputBlogURLView() : BlogGridView(),
           ),
         ),
       ],
@@ -135,20 +146,27 @@ class HomeView extends StatelessWidget {
 }
 
 class InputBlogURLView extends StatelessWidget {
-  onPressed(ctx) {
-    Future.delayed(
-      Duration(milliseconds: 300),
-      () => showAvatarModalBottomSheet(
+  onPressed(BuildContext ctx, BlogModel bm) {
+    Future.delayed(Duration(milliseconds: 300), () async {
+      String url = await showAvatarModalBottomSheet<String>(
         expand: true,
         ctx: ctx,
         backgroundColor: Colors.transparent,
-        builder: (ctx) => ModalInsideModal(),
-      ),
-    );
+        builder: (ctx) => ModalInsideModal(
+          url: Global.profile.blogUrl,
+        ),
+      );
+      bm.setURL(url);
+      Future.delayed(
+        Duration(milliseconds: 700),
+        () => Provider.of<HomeModel>(ctx, listen: false).isBindURL = false,
+      );
+    });
   }
 
   @override
   Widget build(BuildContext ctx) {
+    BlogModel bm = Provider.of<BlogModel>(ctx, listen: false);
     logs.i("build InputBlogURLView");
     return Container(
       padding: EdgeInsets.only(top: 50),
@@ -165,25 +183,8 @@ class InputBlogURLView extends StatelessWidget {
                 Size(double.infinity, 30),
               ),
             ),
-            onPressed: () => onPressed(ctx),
+            onPressed: () => onPressed(ctx, bm),
             child: Text("点此输入博客地址"),
-          ),
-
-          SizedBox(height: 100),
-
-          TextButton(
-            style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all(
-                Size(double.infinity, 30),
-              ),
-            ),
-            onPressed: () {
-              Provider.of<HomeModel>(ctx, listen: false).isBindURL = false;
-            },
-            child: Text(
-              "点击此处预览博客列表",
-              style: Theme.of(ctx).textTheme.subtitle1,
-            ),
           ),
 
           // TextField(),
@@ -193,18 +194,33 @@ class InputBlogURLView extends StatelessWidget {
   }
 }
 
-class ModalInsideModal extends StatelessWidget {
+class ModalInsideModal extends StatefulWidget {
+  final String url;
   final bool reverse;
+  ModalInsideModal({Key key, this.reverse = false, this.url = ""})
+      : super(key: key);
+  @override
+  _ModalInsideModalState createState() => _ModalInsideModalState();
+}
 
-  ModalInsideModal({Key key, this.reverse = false}) : super(key: key);
+class _ModalInsideModalState extends State<ModalInsideModal> {
   final FocusNode node = FocusNode();
+
+  final TextEditingController ctrl = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      Duration(milliseconds: 200),
+      () => FocusScope.of(navigatorKey.currentContext).requestFocus(node),
+    );
+
+    ctrl.text = widget.url;
+  }
 
   @override
   Widget build(BuildContext ctx) {
-    Future.delayed(
-      Duration(milliseconds: 200),
-      () => FocusScope.of(ctx).requestFocus(node),
-    );
     return Material(
         child: CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -216,8 +232,13 @@ class ModalInsideModal extends StatelessWidget {
         ),
         trailing: TextButton(
           onPressed: () {
-            showSuccess("提交成功");
-            Navigator.pop(ctx);
+            String url = ctrl.text;
+            if (url.length < 5) {
+              showError("提交失败\n请检查正确性");
+              return;
+            }
+            showSuccess("即将跳转", Duration(milliseconds: 1000));
+            Navigator.pop(ctx, url);
           },
           child: Text("确定"),
         ),
@@ -231,6 +252,7 @@ class ModalInsideModal extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 15, right: 25, left: 25),
                 child: TextField(
+                  controller: ctrl,
                   // autofocus: true,
                   focusNode: node,
                   decoration: InputDecoration(
