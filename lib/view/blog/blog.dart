@@ -32,10 +32,12 @@ class BlogDetalViewState extends State<BlogDetalView> {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     ctrl.addListener(() {
       if (ctrl.offset < 0) {
-        if (ctrl.offset < -50 && isListener) {
+        // -40 指的是下拉高度
+        if (ctrl.offset < -40 && isListener) {
           isListener = false;
 
-          Future.delayed(Duration(milliseconds: 600), () {
+          // 延迟检测，如果达到了但是用户不松手, 强制关闭
+          Future.delayed(Duration(milliseconds: 500), () {
             SystemChrome.setEnabledSystemUIOverlays(
                 [SystemUiOverlay.top, SystemUiOverlay.bottom]);
             if (mounted) {
@@ -50,6 +52,7 @@ class BlogDetalViewState extends State<BlogDetalView> {
         if (mounted) {
           setState(() {
             end = ctrl.offset.abs() < 40 ? ctrl.offset.abs() : 40;
+            // 获取圆角
             circular = getCircular();
             logs.i("滑动: ${ctrl.offset}  circular:$circular");
           });
@@ -103,13 +106,11 @@ class BlogDetalViewState extends State<BlogDetalView> {
   }
 
   Widget _buildBody(ctx, img) {
-    Widget w = Container(
-      margin: EdgeInsets.only(top: 10),
-      child: WebPage(widget.article.link),
-    );
+    Widget w = WebPage(widget.article.link);
 
-    final double height = 220;
+    final double height = 210;
     w = CustomScrollView(
+      // physics: NeverScrollableScrollPhysics(),
       controller: ctrl,
       slivers: [
         SliverAppBar(
@@ -160,7 +161,28 @@ class BlogDetalViewState extends State<BlogDetalView> {
     return Material(
       borderRadius: BorderRadius.circular(circular),
       color: Theme.of(ctx).scaffoldBackgroundColor,
-      child: w,
+      child: Stack(children: [
+        Column(
+          children: [
+            Container(
+              height: 240,
+              alignment: Alignment.bottomCenter,
+              width: double.infinity,
+              // color: Colors.red,
+              child: Text(
+                "轻微下拉关闭",
+                style: TextStyle(fontSize: 11),
+              ),
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              height: 150,
+              child: Text("ixugo"),
+            ),
+          ],
+        ),
+        w,
+      ]),
     );
   }
 }

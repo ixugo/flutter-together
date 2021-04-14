@@ -9,13 +9,4 @@ class Api {
       "url": url,
     });
   }
-
-  // 获取网页源码
-  static Future<String> getHTML(String url) async {
-    Response resp = await Http().getHTML(url);
-    if (resp?.statusCode == 200) {
-      return resp.data.toString();
-    }
-    return "";
-  }
 }

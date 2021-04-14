@@ -173,8 +173,4 @@ class Http {
       ),
     );
   }
-
-  Future<Response> getHTML(String url) async {
-    return await Dio().get(url);
-  }
 }

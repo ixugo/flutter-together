@@ -29,7 +29,7 @@ class HomeModel extends ChangeNotifier {
   bool _isBindURL = () {
     // 验证域名
     RegExp url = new RegExp(r"^http(s)?://");
-    if (url.hasMatch(Global.profile.blogUrl)) {
+    if (url.hasMatch(Global.profile.blogUrl ?? "")) {
       return false;
     }
     return true;
@@ -156,7 +156,8 @@ class InputBlogURLView extends StatelessWidget {
           url: Global.profile.blogUrl,
         ),
       );
-      bm.setURL(url);
+      if (url != null) bm.setURL(url);
+
       Future.delayed(
         Duration(milliseconds: 700),
         () => Provider.of<HomeModel>(ctx, listen: false).isBindURL = false,
@@ -232,13 +233,13 @@ class _ModalInsideModalState extends State<ModalInsideModal> {
         ),
         trailing: TextButton(
           onPressed: () {
-            String url = ctrl.text;
-            if (url.length < 5) {
-              showError("提交失败\n请检查正确性");
-              return;
+            String url = ctrl.text ?? "";
+            RegExp urlRegExp = new RegExp(r"^http(s)?://");
+            if (urlRegExp.hasMatch(url)) {
+              showSuccess("即将跳转", Duration(milliseconds: 1000));
+              return Navigator.pop(ctx, url);
             }
-            showSuccess("即将跳转", Duration(milliseconds: 1000));
-            Navigator.pop(ctx, url);
+            showError("提交失败\n请检查正确性");
           },
           child: Text("确定"),
         ),

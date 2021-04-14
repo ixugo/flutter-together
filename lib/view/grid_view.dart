@@ -52,8 +52,9 @@ class BlogGridView extends StatelessWidget {
   }
 
   Widget buildWithModel(BuildContext ctx, BlogModel bm) {
+    double len = (bm.dataSource?.length ?? 0).toDouble();
     return Container(
-      height: 1500,
+      height: len * 150,
       // color: Theme.of(ctx).backgroundColor,
       padding: EdgeInsets.only(left: 10, right: 10, top: 20),
       child: StaggeredGridView.countBuilder(

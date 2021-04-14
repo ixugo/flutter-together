@@ -100,11 +100,15 @@ class ControlView extends StatelessWidget {
                       style: TextStyle(fontSize: 10),
                     ),
                     Text(
-                      "著 作 者 : ixugo",
+                      "贡献者列表",
                       style: TextStyle(fontSize: 11),
                     ),
                     Text(
-                      "贡 献 者 : 王博",
+                      "ixugo",
+                      style: TextStyle(fontSize: 11),
+                    ),
+                    Text(
+                      "王博",
                       style: TextStyle(fontSize: 11),
                     ),
                     TextButton(
