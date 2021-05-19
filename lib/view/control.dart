@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_together/view/button/button.dart';
 import 'package:flutter_together/view/home.dart';
 import 'package:flutter_together/widgets/url_lanch.dart';
 
@@ -13,12 +12,12 @@ class UserInfoListTile {
   Widget trailing; // 右侧开关
 
   UserInfoListTile(
-    this.title, [
+    this.title, {
     this.icon,
     this.action,
     this.trailing,
     this.subTitle,
-  ]);
+  });
 }
 
 class ControlView extends StatelessWidget {
@@ -26,12 +25,12 @@ class ControlView extends StatelessWidget {
 
   Widget getList() {
     List<UserInfoListTile> list = [
-      UserInfoListTile(
-        "切换主题",
-        Icons.art_track,
-        () => {},
-        ChangeThemeButton(),
-      )
+      // UserInfoListTile(
+      //   "切换主题",
+      //   icon: Icons.art_track,
+      //   action: () => {},
+      //   trailing: ChangeThemeButton(),
+      // )
     ];
 
     return ListView.builder(

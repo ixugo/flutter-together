@@ -156,12 +156,13 @@ class InputBlogURLView extends StatelessWidget {
           url: Global.profile.blogUrl,
         ),
       );
-      if (url != null) bm.setURL(url);
-
-      Future.delayed(
-        Duration(milliseconds: 700),
-        () => Provider.of<HomeModel>(ctx, listen: false).isBindURL = false,
-      );
+      if (url != null) {
+        bm.setURL(url);
+        Future.delayed(
+          Duration(milliseconds: 700),
+          () => Provider.of<HomeModel>(ctx, listen: false).isBindURL = false,
+        );
+      }
     });
   }
 

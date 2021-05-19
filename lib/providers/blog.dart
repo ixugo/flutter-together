@@ -13,7 +13,7 @@ class BlogModel extends EasyRefreshModel<Article> {
       Global.profile.blogUrl = v;
       Global.saveProfile();
     }
-    refresh();
+    onRefresh();
   }
 
   @override

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_together/app.dart';
 import 'package:flutter_together/common/log.dart';
 import 'package:flutter_together/models/article.dart';
+import 'package:flutter_together/widgets/url_lanch.dart';
 import 'package:flutter_together/widgets/webview.dart';
 
 // TODO 下啦后上滑会引发异常
@@ -206,6 +207,16 @@ class OpenContainerWrapper extends StatelessWidget {
       closedElevation: 0, // 关闭阴影
       transitionType: transitionType,
       openBuilder: (BuildContext ctx, VoidCallback _) {
+        if (!article.link.contains("golang.space")) {
+          // launchURL(article.link);
+          // return null;
+          //
+          Navigator.push(
+            ctx,
+            MaterialPageRoute(builder: (_) => IWebView(article.link)),
+          );
+          return null;
+        }
         return BlogDetalView(
           key: Key(article.link),
           article: article,

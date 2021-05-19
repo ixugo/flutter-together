@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_together/common/lazy_load_stack.dart';
 import 'package:flutter_together/providers/appbar.dart';
-import 'package:flutter_together/providers/theme.dart';
 import 'package:flutter_together/theme.dart';
 import 'package:flutter_together/view/chat.dart';
 import 'package:flutter_together/view/home.dart';
@@ -44,18 +43,15 @@ class TogetherApp extends StatelessWidget {
       SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
     }
 
-    return Consumer<ThemeModel>(builder: (BuildContext ctx, tm, _) {
-      return _buildWithModel(ctx, tm);
-    });
+    return _buildWithModel(ctx);
   }
 
-  Widget _buildWithModel(BuildContext ctx, ThemeModel tm) {
+  Widget _buildWithModel(BuildContext ctx) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       title: taskTitle,
       theme: TogetherTheme.light,
       darkTheme: TogetherTheme.dart,
-      themeMode: tm.getTheme,
       navigatorKey: navigatorKey,
       builder: BotToastInit(),
       navigatorObservers: <NavigatorObserver>[

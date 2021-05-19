@@ -11,7 +11,12 @@ class Article {
   Article.fromJson(Map<String, dynamic> json) {
     title = json['title'] ?? "";
     createAt = json['createAt'] ?? "";
-    tags = json['tags'].cast<String>() ?? [];
+
+    tags = [];
+    if (json['tags'] != null) {
+      tags = json['tags'].cast<String>() ?? [];
+    }
+
     link = json['link'] ?? "";
     img = json["img"] ?? "";
     description = json["description"] ?? "";

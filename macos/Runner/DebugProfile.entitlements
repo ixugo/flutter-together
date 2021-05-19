@@ -8,5 +8,8 @@
 	<true/>
 	<key>com.apple.security.network.server</key>
 	<true/>
+	<!-- 准许链接网络 -->
+	<key>com.apple.security.network.client</key>
+	<true/>
 </dict>
 </plist>

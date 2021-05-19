@@ -29,14 +29,25 @@ List<Map> list = [
   {"img": "https://img.golang.space/shot-1617474562452.jpg"},
 ];
 
-class BlogGridView extends StatelessWidget {
+class BlogGridView extends StatefulWidget {
+  @override
+  _BlogGridViewState createState() => _BlogGridViewState();
+}
+
+class _BlogGridViewState extends State<BlogGridView> {
   final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
   final ScrollController _scrollController = new ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    logs.i("build StaggeredView initState");
+    Provider.of<BlogModel>(this.context, listen: false).onRefresh();
+  }
+
   @override
   Widget build(BuildContext ctx) {
     logs.i("build StaggeredView");
-
-    Provider.of<BlogModel>(ctx, listen: false).onRefresh();
 
     return Consumer<BlogModel>(builder: (BuildContext ctx, BlogModel bm, _) {
       // return EasyRefresh(
@@ -81,6 +92,18 @@ class BlogGridView extends StatelessWidget {
               val.img = list[Random().nextInt(list.length)]["img"] as String;
             }
 
+            double height = 180;
+            double lingCount = 7;
+            if (val.title.length > lingCount * 4) {
+              height = 300;
+            } else if (val.title.length > lingCount * 3) {
+              height = 275;
+            } else if (val.title.length > lingCount * 2) {
+              height = 250;
+            } else if (val.title.length > lingCount) {
+              height = 225;
+            }
+
             return OpenContainerWrapper(
               key: Key(i.toString()),
               transitionType: _transitionType,
@@ -91,8 +114,8 @@ class BlogGridView extends StatelessWidget {
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   child: SizedBox(
-                    //随机生成高度
-                    height: 180 + Random(i).nextInt(20) * 5.0,
+                    // 基本高度加随机生成高度
+                    height: height + Random(i).nextInt(10) * 2,
                     width: 20,
                     child: InkWell(
                       onTap: openContainer,
@@ -124,6 +147,7 @@ class BlogGridView extends StatelessWidget {
     return Expanded(
       child: Center(
         child: Container(
+          padding: EdgeInsets.only(left: 10, right: 10),
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -135,6 +159,7 @@ class BlogGridView extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       fontSize: 13,
                     ),
+                textAlign: TextAlign.center,
               ),
               Text(
                 a.createAt,
