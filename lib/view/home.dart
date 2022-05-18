@@ -22,7 +22,10 @@ final infomation = SvgPicture.asset(
   "assets/images/information.svg",
   width: 150,
 );
-final blogAdd = SvgPicture.asset("assets/images/blog_add.svg", height: 200);
+final blogAdd = SvgPicture.asset(
+  "assets/images/blog_add.svg",
+  height: 200,
+);
 
 class HomeModel extends ChangeNotifier {
   // 绑定博客 URL 切换动画
@@ -100,8 +103,9 @@ class HomeView extends StatelessWidget {
                   child: InkWell(
                     child: CircleAvatar(
                       radius: 18,
+                      backgroundColor: Colors.grey,
                       backgroundImage: NetworkImage(
-                        "https://img.golang.space/1617351635695-xu2yhH.jpg",
+                        "http://img.golang.space/1617351635695-xu2yhH.jpg",
                       ),
                     ),
                     onTap: () {
@@ -199,8 +203,11 @@ class InputBlogURLView extends StatelessWidget {
 class ModalInsideModal extends StatefulWidget {
   final String url;
   final bool reverse;
-  ModalInsideModal({Key key, this.reverse = false, this.url = ""})
-      : super(key: key);
+  ModalInsideModal({
+    Key key,
+    this.reverse = false,
+    this.url = "",
+  }) : super(key: key);
   @override
   _ModalInsideModalState createState() => _ModalInsideModalState();
 }
@@ -208,7 +215,8 @@ class ModalInsideModal extends StatefulWidget {
 class _ModalInsideModalState extends State<ModalInsideModal> {
   final FocusNode node = FocusNode();
 
-  final TextEditingController ctrl = TextEditingController();
+  final TextEditingController ctrl = TextEditingController()
+    ..text = "https://blog.golang.space";
 
   @override
   void initState() {

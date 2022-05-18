@@ -87,8 +87,9 @@ class CupertinoHomePage extends StatelessWidget {
           onTap: (int i) => bm.setCurIndex(i),
           color: Theme.of(ctx).bottomAppBarColor,
           backgroundColor: Colors.transparent,
-          animationDuration: Duration(milliseconds: 370),
+          animationDuration: Duration(milliseconds: 520),
           height: Platform.isIOS ? 65 : 60,
+          animationCurve: Curves.easeOutCubic,
           items: pages.map((e) => Icon(e.icon, size: 30)).toList(),
         ),
         body: LazyIndexedStack(
